@@ -1,0 +1,31 @@
+.board-element {
+    width: 20px;
+    height: 20px;
+    background-color: rgb(185, 188, 188);
+    border: 1px solid black;
+}
+
+.white {
+    background-color: white;
+}
+
+.black {
+    background-color: black;
+}
+
+.green {
+    background-color: green;
+}
+
+.yellow {
+    background-color: yellow
+}
+
+
+.blue {
+    background-color: #2cc9e2;
+}
+
+.red {
+    background-color: #bf5656;
+}

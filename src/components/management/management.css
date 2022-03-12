@@ -1,0 +1,42 @@
+.task-bar {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow: auto;
+    padding: 0 40px;
+}
+
+.btn {
+    text-align: center;
+    display: inline-block;
+    padding: 15px 40px;
+    border: 1px solid #4b4242;
+    cursor: pointer;
+    letter-spacing: 2px;
+    position:relative;
+    overflow:hidden;
+    margin:  20px 10px;
+}
+
+.btn:before {
+    content: "";
+    position: absolute;
+    height: 150px;
+    width: 50px;
+    background : #fff;
+    right: -40px;
+    top: -40px;
+    transform: rotate(37deg);
+    transition: all .3s;
+    opacity: 0.3;
+}
+
+.btn:hover:before {
+    right: 105%;
+}

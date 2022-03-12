@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
+import dijkstraReducer from "../features/dijkstra/dijkstraSlice"
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    dijkstra: dijkstraReducer
   },
 });
 
