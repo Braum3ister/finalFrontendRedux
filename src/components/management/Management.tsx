@@ -25,12 +25,10 @@ export const Management = () => {
             }}>
                 Start Dijkstra
             </button>
-
             <button className={"btn"} onClick={(e) => {
                 e.preventDefault()
                 dispatchPathfinding(dispatch, boardStatus, PathfindingAlgorithm.A_STAR, status)
             }}>
-
                 Start A*
             </button>
 
