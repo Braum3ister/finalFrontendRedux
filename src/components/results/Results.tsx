@@ -1,5 +1,5 @@
 import {useAppSelector} from "../../app/hooks";
-import {selectDistance} from "../../features/dijkstra/dijkstraSlice";
+import {selectDistance} from "../../features/pathfinding/pathfindingSlice";
 
 
 export const Results = () => {
