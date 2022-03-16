@@ -1,16 +1,16 @@
 import "./management.css"
-import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/app/hooks";
 import {
     clear,
     PathfindingAlgorithm,
     selectStatus,
     startPathfindingAsync
-} from "../../features/pathfinding/pathfindingSlice";
-import {BoardStatus, selectBoard} from "../../features/board/boardSlice";
+} from "../../redux/features/pathfinding/pathfindingSlice";
+import {BoardStatus, selectBoard} from "../../redux/features/board/boardSlice";
 import {toast} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import {unwrapResult} from "@reduxjs/toolkit";
-import {AppDispatch} from "../../app/store";
+import {AppDispatch} from "../../redux/app/store";
 
 
 export const Management = () => {

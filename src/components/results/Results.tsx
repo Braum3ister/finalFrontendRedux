@@ -1,5 +1,5 @@
-import {useAppSelector} from "../../app/hooks";
-import {selectDistance} from "../../features/pathfinding/pathfindingSlice";
+import {useAppSelector} from "../../redux/app/hooks";
+import {selectDistance} from "../../redux/features/pathfinding/pathfindingSlice";
 
 
 export const Results = () => {

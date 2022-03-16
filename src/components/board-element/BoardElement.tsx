@@ -1,29 +1,37 @@
 import "./board-element.css"
-import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/app/hooks";
 
-import {selectPath, selectStatus, selectVisited} from "../../features/pathfinding/pathfindingSlice";
+import {selectPath, selectStatus, selectVisited} from "../../redux/features/pathfinding/pathfindingSlice";
 
-import {changeWalls, selectEndPoint, selectStartPoint, selectWalls} from "../../features/board/boardSlice"
+import {
+    BoardStatus,
+    changeWalls,
+    selectBoard,
+    selectEndPoint,
+    selectStartPoint,
+} from "../../redux/features/board/boardSlice"
 
 import {useState} from "react";
-import {AppDispatch} from "../../app/store";
+import {AppDispatch} from "../../redux/app/store";
 
 
 interface BoardElementProps {
     coordinate: number[]
 }
 
+const SPEED = 100
+
 
 export const BoardElement = ({coordinate}: BoardElementProps) => {
     const [color, setColor] = useState("")
     const dispatch = useAppDispatch()
+    const board = useAppSelector(selectBoard)
     const startPoint = useAppSelector(selectStartPoint)
     const endPoint = useAppSelector(selectEndPoint)
     const path = useAppSelector(selectPath)
     const visited = useAppSelector(selectVisited)
     const active = useAppSelector(selectStatus)
-    const walls = useAppSelector(selectWalls)
-    testSettingTheColor(walls, startPoint, path, visited, endPoint, coordinate, setColor, color).then()
+    testSettingTheColor(board,visited, path, coordinate, setColor, color).then()
     return (
         <div className={`board-element ${color}`}
              onClick={() => handleClick(dispatch, active, startPoint, coordinate, endPoint)}/>
@@ -35,22 +43,22 @@ const isSpecialPoint = (coordinateOfSpecialPoint: number[], coordinate: number[]
     return (coordinateOfSpecialPoint[0] === coordinate[0] && coordinateOfSpecialPoint[1] === coordinate[1])
 }
 
-const testSettingTheColor = async (walls: number[][], startPoint: number[], path: Map<string, null>, visited: Map<string, number>, endPoint: number[], coordinate: number[], setColor: (value: string) => void, oldValue: string) => {
-    let possibleNewColor = await determineColor(walls, startPoint, path, visited, endPoint, coordinate)
+const testSettingTheColor = async (board: BoardStatus,visited:  Map<string, number>, path: Map<string, null>, coordinate: number[], setColor: (value: string) => void, oldValue: string) => {
+    let possibleNewColor = await determineColor(board,visited, path, coordinate)
     if (oldValue === possibleNewColor) return;
     setColor(possibleNewColor)
 }
 
 
-const determineColor = async (walls: number[][], startPoint: number[], path: Map<string, null>, visited: Map<string, number>, endPoint: number[], coordinate: number[]) => {
-    if (isSpecialPoint(startPoint, coordinate)) return "red"
-    if (isSpecialPoint(endPoint, coordinate)) return "green";
-    if (helperIsWall(walls, coordinate)) return "black"
+const determineColor = async ({walls , startPoint, endPoint}: BoardStatus, visited:  Map<string, number>, path: Map<string, null>, coordinate: number[]) => {
+    if (isSpecialPoint(startPoint, coordinate)) return "start"
+    if (isSpecialPoint(endPoint, coordinate)) return "end";
+    if (helperIsWall(walls, coordinate)) return "wall"
     let coordinateAsString = convertToString(coordinate[0], coordinate[1])
     if (visited.get(coordinateAsString) === undefined) return ""
-    await waitAmount(visited.get(coordinateAsString)! * 10)
-    if (path.has(coordinateAsString)) return "blue"
-    return "yellow"
+    await waitAmount(visited.get(coordinateAsString)! * SPEED)
+    if (path.has(coordinateAsString)) return "path"
+    return "visited"
 }
 
 const waitAmount = (amount: number) => {

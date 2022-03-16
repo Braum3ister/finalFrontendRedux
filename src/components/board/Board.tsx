@@ -1,8 +1,8 @@
 import {BoardElement} from "../board-element/BoardElement";
 
 import "./board.css"
-import {selectHeight, selectWidth} from "../../features/board/boardSlice";
-import {useAppSelector} from "../../app/hooks";
+import {selectHeight, selectWidth} from "../../redux/features/board/boardSlice";
+import {useAppSelector} from "../../redux/app/hooks";
 
 export const Board = () => {
     const height = useAppSelector(selectHeight)
