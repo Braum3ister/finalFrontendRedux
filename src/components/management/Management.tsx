@@ -1,9 +1,10 @@
 import "./management.css"
 import {useAppDispatch, useAppSelector} from "../../redux/app/hooks";
 import {
+    BiPathfindingAlgorithm,
     clear,
     PathfindingAlgorithm,
-    selectStatus,
+    selectStatus, startBiPathfindingAsync,
     startPathfindingAsync
 } from "../../redux/features/pathfinding/pathfindingSlice";
 import {BoardStatus, selectBoard} from "../../redux/features/board/boardSlice";
@@ -34,6 +35,13 @@ export const Management = () => {
 
             <button className={"btn"} onClick={(e) => {
                 e.preventDefault()
+                dispatchBiPathfinding(dispatch, boardStatus, BiPathfindingAlgorithm.BI_DIJKSTRA, status)
+            }}>
+                Start Bidirectional-Dijkstra
+            </button>
+
+            <button className={"btn"} onClick={(e) => {
+                e.preventDefault()
                 dispatch(clear())
                 dispatchInfoToast("Cleared")
 
@@ -42,6 +50,24 @@ export const Management = () => {
             </button>
         </div>
     )
+}
+
+const dispatchBiPathfinding = (dispatch: AppDispatch, boardStatus: BoardStatus, algorithm: BiPathfindingAlgorithm,
+                               status: string) => {
+    if (status === "active") {
+        dispatchErrorToast()
+        return
+    }
+    dispatchInfoToast("Started")
+
+    dispatch(startBiPathfindingAsync({
+        boardStatus,
+        algorithm
+    }))
+        .then(unwrapResult)
+        .catch((error) => {
+            toast.error(error)
+        })
 }
 
 const dispatchPathfinding = (dispatch: AppDispatch, boardStatus: BoardStatus, algorithm: PathfindingAlgorithm
@@ -57,11 +83,9 @@ const dispatchPathfinding = (dispatch: AppDispatch, boardStatus: BoardStatus, al
         algorithm
     }))
         .then(unwrapResult)
-        .catch((obj) => {
-            toast.error(obj.message, {position: "bottom-center"}
-
-            )
-        });
+        .catch((error) => {
+            toast.error(error)
+        })
 }
 
 const dispatchInfoToast = (message: string) => {
@@ -74,7 +98,6 @@ const dispatchInfoToast = (message: string) => {
         draggable: true,
         progress: undefined,
     });
-
 }
 
 const dispatchErrorToast = () => {

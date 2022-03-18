@@ -22,4 +22,18 @@ export const fetchDijkstraAxios = async ({
 
 }
 
+export const fetchDijkstra = async ({
+                                        startPoint, endPoint, walls, height, width
+                                    }: BoardStatus): Promise<PathfindingPromise> => {
+
+    let response = await fetch("http://localhost:6969/api/dijkstra", {
+        method: "Post", headers: {
+            "Content-Type": "application/json",
+        }, body: JSON.stringify({
+            "height": height, "width": width, "startPoint": startPoint, "endPoint": endPoint, "walls": walls
+        })
+    })
+    return response.json()
+
+}
 
