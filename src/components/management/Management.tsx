@@ -42,6 +42,13 @@ export const Management = () => {
 
             <button className={"btn"} onClick={(e) => {
                 e.preventDefault()
+                dispatchBiPathfinding(dispatch, boardStatus, BiPathfindingAlgorithm.BI_A_STAR, status)
+            }}>
+                Start Bidirectional-ASTAR
+            </button>
+
+            <button className={"btn"} onClick={(e) => {
+                e.preventDefault()
                 dispatch(clear())
                 dispatchInfoToast("Cleared")
 

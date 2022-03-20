@@ -1,9 +1,10 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {fetchAStarAxios} from "./astarAPI"
+import {fetchAStarAxios} from "./unidirectional_pathfinding/astarAPI"
 import {RootState} from "../../app/store";
 import {BoardStatus} from "../board/boardSlice";
-import {fetchDijkstraAxios} from "./dijkstraAPI";
+import {fetchDijkstraAxios} from "./unidirectional_pathfinding/dijkstraAPI";
 import {fetchBiDijkstraAxios} from "./bidirectional_pathfinding/biDijkstraAPI";
+import {fetchBiAStarAxios} from "./bidirectional_pathfinding/biAStarAPI";
 
 
 export const enum PathfindingAlgorithm {
@@ -81,6 +82,9 @@ export const startBiPathfindingAsync = createAsyncThunk(
         switch (data.algorithm) {
             case BiPathfindingAlgorithm.BI_DIJKSTRA:
                 return fetchBiDijkstraAxios(data.boardStatus)
+
+            case BiPathfindingAlgorithm.BI_A_STAR:
+                return fetchBiAStarAxios(data.boardStatus)
             default:
                 console.log("NOT IMPLEMENTED YET")
         }

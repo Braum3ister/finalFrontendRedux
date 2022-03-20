@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from "axios"
 
-import {BoardStatus} from "../board/boardSlice";
-import {PathfindingPromise} from "./pathfindingSlice";
+import {BoardStatus} from "../../board/boardSlice";
+import {PathfindingPromise} from "../pathfindingSlice";
 
 
 export const fetchDijkstraAxios = async ({
